@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block Content %}
+
+<body class="index-page">
+
+  
+
+  <main class="main">
+
+    <!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
+
+  <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+    <div class="carousel-item active">
+      <img src="{% static 'assets/img/hero_1.jpg' %}" alt="">
+      <div class="carousel-container">
+        <h2>Eastern Zone Hostels</h2>
+        <p>Home to various male and female hostels, including Mfumbiro, Nyandarua, and New Menengai. Offering a range of room options for comfort and convenience.</p>
+      </div>
+    </div><!-- End Carousel Item -->
+
+    <div class="carousel-item">
+      <img src="{% static 'assets/img/hero_2.jpg' %}" alt="">
+      <div class="carousel-container">
+        <h2>Nyayo Zone Hostels</h2>
+        <p>The most populous zone, located across the railway line. It consists of six hostels, including Nyayo One to Six and Nyayo Flats, accommodating both male and female students.</p>
+      </div>
+    </div><!-- End Carousel Item -->
+
+    <div class="carousel-item">
+      <img src="{% static 'assets/img/hero_3.jpg' %}" alt="">
+      <div class="carousel-container">
+        <h2>Western Zone Hostels</h2>
+        <p>Located between the KU Conference Centre and the Students' Centre, Western Zone offers a variety of hostels such as Ngong, Ruwenzori, and Usambara for both genders.</p>
+      </div>
+    </div><!-- End Carousel Item -->
+
+    <div class="carousel-item">
+      <img src="{% static 'assets/img/hero_4.jpg' %}" alt="">
+      <div class="carousel-container">
+        <h2>Ruiru Campus Hostels</h2>
+        <p>Designed for Self-Sponsored Students (SSP), Ruiru Campus provides hostels such as Chania, Athi, and Tana, catering to both male and female students.</p>
+      </div>
+    </div><!-- End Carousel Item -->
+
+    <div class="carousel-item">
+      <img src="{% static 'assets/img/hero_5.jpg' %}" alt="">
+      <div class="carousel-container">
+        <h2>Parklands Campus & Off-Campus Housing</h2>
+        <p>Additional hostel accommodations available at Parklands Campus, with various options ranging from single to common rooms for different student needs.</p>
+      </div>
+    </div><!-- End Carousel Item -->
+
+    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
+
+    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
+
+    <ol class="carousel-indicators"></ol>
+
+  </div>
+
+</section><!-- /Hero Section -->
+
+
+    <!-- Types of Hostels Section -->
+<section id="services" class="services section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>TYPES OF HOSTELS</h2>
+    <p>Choose from a variety of room options, both on-campus and off-campus.</p>
+  </div><!-- End Section Title -->
+
+  <div class="content">
+    <div class="container">
+      <div class="row g-0">
+        <div class="col-lg-3 col-md-6">
+          <div class="service-item">
+            <span class="number">01</span>
+            <div class="service-item-icon">
+              <i class="bi bi-person"></i> <!-- Single Room Icon -->
+            </div>
+            <div class="service-item-content">
+              <h3 class="service-heading">Single Room</h3>
+              <p>Enjoy privacy in a single room. Ideal for focused study. <br><strong>Price: Ksh 15,000 per semester</strong></p>
+              <a href="{% url 'myapp:book_hostel' %}" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="service-item">
+            <span class="number">02</span>
+            <div class="service-item-icon">
+              <i class="bi bi-people"></i> <!-- Double Room Icon -->
+            </div>
+            <div class="service-item-content">
+              <h3 class="service-heading">Double Room</h3>
+              <p>Shared accommodation for two students. Spacious and affordable. <br><strong>Price: Ksh 10,000 per semester</strong></p>
+              <a href="{% url 'myapp:book_hostel' %}" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="service-item">
+            <span class="number">03</span>
+            <div class="service-item-icon">
+              <i class="bi bi-people-fill"></i> <!-- Triple Room Icon -->
+            </div>
+            <div class="service-item-content">
+              <h3 class="service-heading">Triple Room</h3>
+              <p>Shared by three students, offering a balance between cost and comfort. <br><strong>Price: Ksh 8,500 per semester</strong></p>
+              <a href="{% url 'myapp:book_hostel' %}" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="service-item">
+            <span class="number">04</span>
+            <div class="service-item-icon">
+              <i class="bi bi-house-door"></i> <!-- Common Room Icon -->
+            </div>
+            <div class="service-item-content">
+              <h3 class="service-heading">Common Room (4-6 Students)</h3>
+              <p>Budget-friendly option for group accommodation. <br><strong>Price: Ksh 6,000 per semester</strong></p>
+              <a href="{% url 'myapp:book_hostel' %}" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="service-item">
+            <span class="number">05</span>
+            <div class="service-item-icon">
+              <i class="bi bi-building"></i> <!-- On-Campus Hostel Icon -->
+            </div>
+            <div class="service-item-content">
+              <h3 class="service-heading">On-Campus Hostels</h3>
+              <p>Conveniently located within the university. Easy access to lecture halls. <br><strong>Price: Varies by hostel</strong></p>
+              <a href="{% url 'myapp:book_hostel' %}" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="service-item">
+            <span class="number">06</span>
+            <div class="service-item-icon">
+              <i class="bi bi-geo-alt"></i> <!-- Off-Campus Hostel Icon -->
+            </div>
+            <div class="service-item-content">
+              <h3 class="service-heading">Off-Campus Hostels</h3>
+              <p>Available for students who prefer independent living options. <br><strong>Price: Varies by location</strong></p>
+              <a href="{% url 'myapp:book_hostel' %}" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section><!-- /Types of Hostels Section -->
+
+
+    <!-- About Section -->
+<section id="about" class="about section">
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <img src="{% static 'assets/img/img_long_5.jpg' %}" alt="Image " class="img-fluid img-overlap" data-aos="zoom-out">
+        </div>
+        <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="content-subtitle text-white opacity-50">Why Choose Us</h3>
+          <h2 class="content-title mb-4">
+            Comfortable & Secure <strong>Student Living</strong>
+          </h2>
+          <p class="opacity-50">
+            Our hostel provides a safe, clean, and friendly environment for students, ensuring they have a peaceful stay while focusing on their academics.
+          </p>
+
+          <div class="row my-5">
+            <div class="col-lg-12 d-flex align-items-start mb-4">
+              <i class="bi bi-shield-lock me-4 display-6"></i>
+              <div>
+                <h4 class="m-0 h5 text-white">24/7 Security</h4>
+                <p class="text-white opacity-50">CCTV surveillance and on-site security personnel ensure your safety at all times.</p>
+              </div>
+            </div>
+            <div class="col-lg-12 d-flex align-items-start mb-4">
+              <i class="bi bi-wifi me-4 display-6"></i>
+              <div>
+                <h4 class="m-0 h5 text-white">High-Speed Wi-Fi</h4>
+                <p class="text-white opacity-50">Stay connected with unlimited internet access for study and entertainment.</p>
+              </div>
+            </div>
+            <div class="col-lg-12 d-flex align-items-start">
+              <i class="bi bi-house-heart me-4 display-6"></i>
+              <div>
+                <h4 class="m-0 h5 text-white">Affordable & Comfortable</h4>
+                <p class="text-white opacity-50">Well-furnished rooms designed for student comfort at budget-friendly prices.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- /About Section -->
+
+<!-- About 3 Section -->
+<section id="about-3" class="about-3 section">
+  <div class="container">
+    <div class="row gy-4 justify-content-between align-items-center">
+      <div class="col-lg-6 order-lg-2 position-relative" data-aos="zoom-out">
+        <img src="{% static 'assets/img/img_sq_1.jpg' %}" alt="Image" class="img-fluid">
+        <a href="https://www.youtube.com/watch?v=euhVGbgUMeM" class="glightbox pulsating-play-btn">
+          <span class="play"><i class="bi bi-play-fill"></i></span>
+        </a>
+      </div>
+      <div class="col-lg-5 order-lg-1" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="content-title mb-4">A Home Away from Home</h2>
+        <p class="mb-4">
+          Our hostel is more than just a place to stay. It’s a vibrant student community that provides the perfect balance between academic focus and social engagement.
+        </p>
+        <ul class="list-unstyled list-check">
+          <li>Spacious and well-ventilated rooms</li>
+          <li>Common study areas for group discussions</li>
+          <li>Recreational spaces for relaxation</li>
+        </ul>
+
+        <p><a href="#" class="btn-cta">Book Your Stay</a></p>
+      </div>
+    </div>
+  </div>
+</section><!-- /About 3 Section -->
+
+<!-- Services 2 Section -->
+<section id="services-2" class="services-2 section dark-background">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Our Services</h2>
+    <p>Ensuring the best hostel experience for students</p>
+  </div><!-- End Section Title -->
+
+  <div class="services-carousel-wrap">
+    <div class="container">
+      <div class="swiper init-swiper">
+        <script type="application/json" class="swiper-config">
+          {
+            "loop": true,
+            "speed": 600,
+            "autoplay": {
+              "delay": 5000
+            },
+            "slidesPerView": "auto",
+            "pagination": {
+              "el": ".swiper-pagination",
+              "type": "bullets",
+              "clickable": true
+            },
+            "navigation": {
+              "nextEl": ".js-custom-next",
+              "prevEl": ".js-custom-prev"
+            },
+            "breakpoints": {
+              "320": {
+                "slidesPerView": 1,
+                "spaceBetween": 40
+              },
+              "1200": {
+                "slidesPerView": 3,
+                "spaceBetween": 40
+              }
+            }
+          }
+        </script>
+        <button class="navigation-prev js-custom-prev">
+          <i class="bi bi-arrow-left-short"></i>
+        </button>
+        <button class="navigation-next js-custom-next">
+          <i class="bi bi-arrow-right-short"></i>
+        </button>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="service-item">
+              <div class="service-item-contents">
+                <a href="#">
+                  <span class="service-item-category">We Offer</span>
+                  <h2 class="service-item-title">Comfortable Rooms</h2>
+                </a>
+              </div>
+              <img src="{% static 'assets/img/img_long_53.jpg' %}" alt="Image" class="img-fluid">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-item">
+              <div class="service-item-contents">
+                <a href="#">
+                  <span class="service-item-category">We Provide</span>
+                  <h2 class="service-item-title">Nutritious Meals</h2>
+                </a>
+              </div>
+              <img src="{% static 'assets/img/img_sq_3.jpg' %}" alt="Image" class="img-fluid">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-item">
+              <div class="service-item-contents">
+                <a href="#">
+                  <span class="service-item-category">We Ensure</span>
+                  <h2 class="service-item-title">24/7 Security</h2>
+                </a>
+              </div>
+              <img src="{% static 'assets/img/img_sq_8.jpg' %}" alt="Image" class="img-fluid">
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="service-item">
+              <div class="service-item-contents">
+                <a href="#">
+                  <span class="service-item-category">We Maintain</span>
+                  <h2 class="service-item-title">Clean Facilities</h2>
+                </a>
+              </div>
+              <img src="{% static 'assets/img/img_sq_4.jpg' %}" alt="Image" class="img-fluid">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-item">
+              <div class="service-item-contents">
+                <a href="#">
+                  <span class="service-item-category">We Provide</span>
+                  <h2 class="service-item-title">Laundry Services</h2>
+                </a>
+              </div>
+              <img src="{% static 'assets/img/img_sq_5.jpg' %}" alt="Image" class="img-fluid">
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-item">
+              <div class="service-item-contents">
+                <a href="#">
+                  <span class="service-item-category">We Offer</span>
+                  <h2 class="service-item-title">Recreational Areas</h2>
+                </a>
+              </div>
+              <img src="{% static 'assets/img/img_sq_6.jpg' %}" alt="Image" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</section><!-- /Services 2 Section -->
+
+
+    <!-- Testimonials Section -->
+<section class="testimonials-12 testimonials section" id="testimonials">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>STUDENT TESTIMONIALS</h2>
+    <p>Hear from students who have stayed in our hostels</p>
+  </div><!-- End Section Title -->
+
+  <div class="testimonial-wrap">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-4 mb-md-4">
+          <div class="testimonial">
+            <img src="{% static 'assets/img/testimonials/testimonials-1.jpg' %}" alt="Testimonial author">
+            <blockquote>
+              <p>
+                “Staying in the on-campus hostel was the best decision! The convenience of being close to classes saved me so much time. The rooms were clean, and the security was excellent.”
+              </p>
+            </blockquote>
+            <p class="client-name">James Otieno – 3rd Year, Engineering</p>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-4 mb-md-4">
+          <div class="testimonial">
+            <img src="{% static 'assets/img/testimonials/testimonials-2.jpg' %}" alt="Testimonial author">
+            <blockquote>
+              <p>
+                “I stayed in the double room, and it was great. The environment was quiet enough for studying, and the common areas were well-maintained. Definitely recommend it!”
+              </p>
+            </blockquote>
+            <p class="client-name">Brian Kiprono – 2nd Year, Business Studies</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-4 mb-md-4">
+          <div class="testimonial">
+            <img src="{% static 'assets/img/testimonials/testimonials-3.jpg' %}" alt="Testimonial author">
+            <blockquote>
+              <p>
+                “Affordable and comfortable! I shared a room with three other students, and we had a great time. The hostel management was always responsive to any issues.”
+              </p>
+            </blockquote>
+            <p class="client-name">Kate Njeri – 4th Year, Computer Science</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-4 mb-md-4">
+          <div class="testimonial">
+            <img src="{% static 'assets/img/testimonials/testimonials-4.jpg' %}" alt="Testimonial author">
+            <blockquote>
+              <p>
+                “The off-campus hostel gave me the independence I needed while still being close to school. The facilities were great, and the price was reasonable. I’d choose it again!”
+              </p>
+            </blockquote>
+            <p class="client-name">Lenn Mwangi – 3rd Year, Law</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- /Testimonials Section -->
+
+
+  </main>
+
+  
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+{% endblock %}

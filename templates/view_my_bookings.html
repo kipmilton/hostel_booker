@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Bookings - KU Hostels{% endblock %}
+
+{% block Content %}
+<div class="container mt-5">
+    <h2 class="text-center">My Bookings</h2>
+    
+    {% if bookings %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hostel</th>
+                    <th>Full Name</th>
+                    <th>Registration Number</th>
+                    <th>Gender</th>
+                    <th>Hostel Type</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.hostel.name }}</td>
+                        <td>{{ booking.full_name }}</td>
+                        <td>{{ booking.registration_number }}</td>
+                        <td>{{ booking.gender }}</td>
+                        <td>{{ booking.hostel_type }}</td>
+                        <td>{{ booking.location }}</td>
+                        <td>{{ booking.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">You have no bookings yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

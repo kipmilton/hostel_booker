@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Bookings - KU Hostels{% endblock %}
+
+{% block Content %}
+<div class="container mt-5">
+    <h2 class="text-center">All Bookings</h2>
+    
+    {% if bookings %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Hostel</th>
+                    <th>Full Name</th>
+                    <th>Registration Number</th>
+                    <th>Gender</th>
+                    <th>Hostel Type</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.user.username }}</td>
+                        <td>{{ booking.hostel.name }}</td>
+                        <td>{{ booking.full_name }}</td>
+                        <td>{{ booking.registration_number }}</td>
+                        <td>{{ booking.gender }}</td>
+                        <td>{{ booking.hostel_type }}</td>
+                        <td>{{ booking.location }}</td>
+                        <td>{{ booking.status }}</td>
+                        <td>
+                            <form method="post" action="{% url 'myapp:update_booking_status' booking.id %}">
+                                {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()">
+                                    <option value="Pending" {% if booking.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                    <option value="Allocated" {% if booking.status == 'Allocated' %}selected{% endif %}>Allocated</option>
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">No bookings found.</p>
+    {% endif %}
+</div>
+{% endblock %}

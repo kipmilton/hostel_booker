@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book a Room{% endblock %}
+
+{% block Content %}
+<div class="container mt-5">
+    <h2 class="text-center">Book a Hostel Room</h2>
+
+    <!-- Display messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Display form errors -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>There were errors in your submission:</strong>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li><strong>{{ field }}</strong>: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <h1 class="text-center">Welcome, {{ user.username }}! Book a hostel today and wait for our response.</h1>
+    <h3 class="text-center"><i>(Allocation is based on First come first serve!)</i></h3>
+    
+    <form method="post" action="{% url 'myapp:book_hostel' %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.name.label }}</label>
+            {{ form.name }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.reg_number.label }}</label>
+            {{ form.reg_number }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.year_of_study.label }}</label>
+            {{ form.year_of_study }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.gender.label }}</label>
+            {{ form.gender }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.hostel_type.label }}</label>
+            {{ form.hostel_type }}
+        </div>
+
+        <p id="cost_display">Cost per Semester: Ksh 0</p>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.location.label }}</label>
+            {{ form.location }}
+        </div>
+
+        <!-- Fixed hostel_name checkboxes -->
+        <div class="mb-3">
+            <label class="form-label">Select Hostels</label>
+            <div>
+                {% for checkbox in form.hostel_name %}
+                    <div class="form-check">
+                        {{ checkbox.tag }} 
+                        <label class="form-check-label">{{ checkbox.choice_label }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Hidden input for cost_per_semester -->
+         <p>Re-enter your year of study! Click submit</p>
+         {{ form.cost_per_semester }}
+<br><br>
+<button type="submit" class="btn btn-primary" onclick="return confirmBooking(event)">Submit</button>
+    </form>
+<br><br>
+    <a href="{% url 'myapp:my_applications' %}" class="btn btn-success mt-3">View My Applications</a>
+<br><br>
+    {% else %}
+        <p class="text-center">You need to <a href="{% url 'myapp:login_page' %}">log in</a> to book a room.</p>
+    {% endif %}
+</div>
+
+<!-- <script>
+function updateCost() {
+    var hostelType = document.getElementById("id_hostel_type").value;
+    var costMapping = {
+        "Single Room": 12000,
+        "Double Room": 10000,
+        "Triple Room": 9000,
+        "Quadruple Room": 8800,
+        "Quintuple Room": 8000,
+        "Sextuple Room": 7600
+    };
+    document.getElementById("cost_display").innerText = "Cost per Semester: Ksh " + (costMapping[hostelType] || 0);
+}
+
+document.getElementById("id_hostel_type").addEventListener("change", updateCost);
+window.onload = updateCost;
+</script> -->
+
+<script>
+    function updateCost() {
+        var hostelType = document.getElementById("id_hostel_type").value;
+        var costMapping = {
+            "Single Room": 12000,
+            "Double Room": 10000,
+            "Triple Room": 9000,
+            "Quadruple Room": 8800,
+            "Quintuple Room": 8000,
+            "Sextuple Room": 7600
+        };
+        var cost = costMapping[hostelType] || 0;
+        document.getElementById("cost_display").innerText = "Cost per Semester: Ksh " + cost;
+    }
+    
+    document.getElementById("id_hostel_type").addEventListener("change", updateCost);
+    window.onload = updateCost;
+    
+    function confirmBooking(event) {
+        var cost = document.getElementById("cost_display").innerText.split("Ksh ")[1]; 
+        var confirmation = confirm("Confirm application. Allocation is based on first come first serve. If allocated, Ksh. " + cost + " will be invoiced on your portal. Keep checking your status.");
+        
+        if (!confirmation) {
+            event.preventDefault(); // Stop form submission if user clicks Cancel
+        }
+    }
+    </script>
+    
+
+{% endblock %}

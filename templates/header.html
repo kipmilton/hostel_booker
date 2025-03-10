@@ -1,0 +1,42 @@
+{% load static %}
+
+<header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'myapp:home_page' %}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img src="{% static 'assets/img/logo.png' %}" alt="AgriCulture">
+        <h1 class="sitename">KU Hostels</h1> 
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'myapp:home_page' %}" class="active">Home</a></li>
+          <li><a href="{% url 'myapp:home_page' %}#about">About Us</a></li>
+          <li><a href="{% url 'myapp:home_page' %}#services">Our Hostels</a></li>
+          <li><a href="{% url 'myapp:book_hostel' %}">Book Hostel</a></li>
+          <li><a href="{% url 'myapp:home_page' %}#testimonials">Reviews</a></li>
+          <li class="dropdown">
+            {% if user.is_authenticated %}
+                <a href="#"><span>Welcome, {{ user.username }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'myapp:admin_dashboard' %}">View Applications</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'myapp:logout' %}">Logout</a></li>
+                </ul>
+            {% else %}
+                <a href="#"><span>Login / Sign up</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                    <li><a href="{% url 'myapp:login_page' %}">Login</a></li>
+                    <li><a href="{% url 'myapp:register' %}">Register</a></li>
+                </ul>
+            {% endif %}
+        </li>
+        
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
