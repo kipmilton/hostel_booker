@@ -13,7 +13,8 @@
                 <tr class="bg-primary text-white">
                     <th>Hostel Name</th>
                     <th>Expected To Pay (Sh.)</th>
-                    <th>Allocation status</th>
+                    <th>Allocation Status</th>
+                    <th>Download Report</th> <!-- New Column -->
                 </tr>
             </thead>
             <tbody>
@@ -24,22 +25,26 @@
                     <td>
                         {% if application.status == "Pending" %}
                             <span class="badge bg-warning text-dark">Pending</span>
-
                         {% elif application.status == "Declined" %}
-                            <span class="badge bg-primary text-dark">Declined</span>
+                            <span class="badge bg-danger">Declined</span>
                         {% else %}
                             <span class="badge bg-success">Accepted</span>
                         {% endif %}
                     </td>
+                    <td>
+                        <!-- Download Button -->
+                        <a href="{% url 'myapp:download_application_report' application.id %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-download"></i> Download Report
+                        </a>
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="2" class="text-muted text-center">No applications found.</td>
+                    <td colspan="4" class="text-muted text-center">No applications found.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
 {% endblock %}

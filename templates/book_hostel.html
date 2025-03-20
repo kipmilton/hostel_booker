@@ -33,58 +33,41 @@
     <h3 class="text-center"><i>(Allocation is based on First come first serve!)</i></h3>
     
     <form method="post" action="{% url 'myapp:book_hostel' %}">
-        {% csrf_token %}
-
-        <div class="mb-3">
-            <label class="form-label">{{ form.name.label }}</label>
-            {{ form.name }}
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">{{ form.reg_number.label }}</label>
-            {{ form.reg_number }}
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">{{ form.year_of_study.label }}</label>
-            {{ form.year_of_study }}
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">{{ form.gender.label }}</label>
-            {{ form.gender }}
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">{{ form.hostel_type.label }}</label>
-            {{ form.hostel_type }}
-        </div>
-
-        <p id="cost_display">Cost per Semester: Ksh 0</p>
-
-        <div class="mb-3">
-            <label class="form-label">{{ form.location.label }}</label>
-            {{ form.location }}
-        </div>
-
-        <!-- Fixed hostel_name checkboxes -->
-        <div class="mb-3">
-            <label class="form-label">Select Hostels</label>
-            <div>
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.reg_number.label_tag }}
+                {{ form.reg_number }}
+            </div>
+            <div class="form-group">
+                {{ form.year_of_study.label_tag }}
+                {{ form.year_of_study }}
+            </div>
+            <div class="form-group">
+                {{ form.gender.label_tag }}
+                {{ form.gender }}
+            </div>
+            <div class="form-group">
+                {{ form.hostel_type.label_tag }}
+                {{ form.hostel_type }}
+            </div>
+            <div class="form-group">
+                {{ form.location.label_tag }}
+                {{ form.location }}
+            </div>
+            <div class="form-group">
+                {{ form.hostel_name.label_tag }}
                 {% for checkbox in form.hostel_name %}
                     <div class="form-check">
-                        {{ checkbox.tag }} 
-                        <label class="form-check-label">{{ checkbox.choice_label }}</label>
+                        {{ checkbox }}
                     </div>
                 {% endfor %}
             </div>
-        </div>
-        <!-- Hidden input for cost_per_semester -->
-         <p>Re-enter your year of study! Click submit</p>
-         {{ form.cost_per_semester }}
-<br><br>
-<button type="submit" class="btn btn-primary" onclick="return confirmBooking(event)">Submit</button>
-    </form>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 <br><br>
     <a href="{% url 'myapp:my_applications' %}" class="btn btn-success mt-3">View My Applications</a>
 <br><br>
