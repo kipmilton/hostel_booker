@@ -14,7 +14,7 @@
                     <th>Hostel Name</th>
                     <th>Expected To Pay (Sh.)</th>
                     <th>Allocation Status</th>
-                    <th>Download Report</th> <!-- New Column -->
+                    <th>Download Report</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,7 +34,7 @@
                     <td>
                         <!-- Download Button -->
                         <a href="{% url 'myapp:download_application_report' application.id %}" class="btn btn-primary btn-sm">
-                            <i class="bi bi-download"></i> Download Report
+                            <i class="bi bi-download"></i> Download PDF
                         </a>
                     </td>
                 </tr>

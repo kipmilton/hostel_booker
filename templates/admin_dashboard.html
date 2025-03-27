@@ -12,6 +12,7 @@
         <a href="{% url 'myapp:admin_dashboard' %}?status=Pending" class="btn btn-warning">View Pending Applications</a>
         <a href="{% url 'myapp:admin_dashboard' %}?status=Allocated" class="btn btn-success">View Accepted Applications</a>
         <a href="{% url 'myapp:admin_dashboard' %}?status=Declined" class="btn btn-danger">View Declined Applications</a>
+        <a href="{% url 'myapp:view_hostel_reports' %}" class="btn btn-info">View Reports</a> 
     </div>
 
     <!-- Applications Table -->
@@ -68,14 +69,14 @@
         </div>
     </form>
 
-    <!-- Download Button -->
+    <!-- Download Buttons for Filtered Applications -->
     <div class="text-center mt-3">
         {% if request.GET.status == "Pending" %}
-            <a href="{% url 'myapp:download_report' 'Pending' %}" class="btn btn-primary">Download Pending Report</a>
+            <a href="{% url 'myapp:download_filtered_applications_pdf' 'Pending' %}" class="btn btn-primary">Download Pending Applications (PDF)</a>
         {% elif request.GET.status == "Allocated" %}
-            <a href="{% url 'myapp:download_report' 'Allocated' %}" class="btn btn-primary">Download Accepted Report</a>
+            <a href="{% url 'myapp:download_filtered_applications_pdf' 'Allocated' %}" class="btn btn-primary">Download Accepted Applications (PDF)</a>
         {% elif request.GET.status == "Declined" %}
-            <a href="{% url 'myapp:download_report' 'Declined' %}" class="btn btn-primary">Download Declined Report</a>
+            <a href="{% url 'myapp:download_filtered_applications_pdf' 'Declined' %}" class="btn btn-primary">Download Declined Applications (PDF)</a>
         {% endif %}
     </div>
 </div>

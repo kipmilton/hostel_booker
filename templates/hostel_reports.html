@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hostel Reports - KU Hostels{% endblock %}
+
+{% block Content %}
+<div class="container mt-5">
+    <h2 class="text-center">Hostel Reports</h2>
+
+    <!-- Hostel Selection Form -->
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="hostel_name">Select Hostel:</label>
+            <select name="hostel_name" id="hostel_name" class="form-control" required>
+                <option value="" disabled selected>Select a hostel</option>
+                <option value="Mfumbiro Hostels">Mfumbiro Hostels</option>
+                <option value="Nyayo Hostels">Nyayo Hostels</option>
+                <option value="Nyandarua Hostels">Nyandarua Hostels</option>
+                <option value="New Menengai Hostels">New Menengai Hostels</option>
+                <option value="New Ruwenzori Hostels">New Ruwenzori Hostels</option>
+                <option value="Usambara Hostels">Usambara Hostels</option>
+                <option value="Longonot Hostels">Longonot Hostels</option>
+                <option value="Kilimambogo Hostels">Kilimambogo Hostels</option>
+                <option value="Chania Hostels">Chania Hostels</option>
+                <option value="Tana Hostels">Tana Hostels</option>
+                <option value="New Aberdares Hostels">New Aberdares Hostels</option>
+                <option value="Old Aberdares Hostels">Old Aberdares Hostels</option>
+                <option value="Ngong Hostels">Ngong Hostels</option>
+                <option value="Old Ruwenzori Hostels">Old Ruwenzori Hostels</option>
+                <option value="Lukenya Hostels">Lukenya Hostels</option>
+                <option value="Athi Hostels">Athi Hostels</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">View Report</button>
+    </form>
+
+    <!-- Display Filtered Applications -->
+    {% if applications %}
+        <h3 class="text-center">Applications for {{ selected_hostel }}</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover shadow-lg">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Registration Number</th>
+                        <th>Year of Study</th>
+                        <th>Gender</th>
+                        <th>Hostel Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                    <tr>
+                        <td>{{ application.name }}</td>
+                        <td>{{ application.reg_number }}</td>
+                        <td>{{ application.year_of_study }}</td>
+                        <td>{{ application.gender }}</td>
+                        <td>{{ application.hostel_type }}</td>
+                        <td>
+                            {% if application.status == "Pending" %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% elif application.status == "Allocated" %}
+                                <span class="badge bg-success">Accepted</span>
+                            {% else %}
+                                <span class="badge bg-danger">Declined</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No applications found for this hostel.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

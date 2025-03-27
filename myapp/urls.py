@@ -20,7 +20,9 @@ urlpatterns = [
     path('view-accepted-bookings/', views.view_accepted_bookings, name='view_accepted_bookings'),
     path('view-declined-bookings/', views.view_declined_bookings, name='view_declined_bookings'),
     path('download-report/<str:status>/', views.download_report, name='download_report'),
+    path('download-filtered-applications-pdf/<str:status>/', views.download_filtered_applications_pdf, name='download_filtered_applications_pdf'),
     path('download-application-report/<int:application_id>/', views.download_application_report, name='download_application_report'),
+    path('view-hostel-reports/', views.view_hostel_reports, name='view_hostel_reports'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

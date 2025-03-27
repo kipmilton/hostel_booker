@@ -110,33 +110,34 @@ def admin_dashboard(request):
 from django.contrib import messages
 
 def download_report(request, status):
+    valid_statuses = ["Pending", "Confirmed"] 
+    if status not in valid_statuses:
+        messages.warning(request, f"Invalid status: {status}")
+        return redirect('myapp:view_all_bookings')
+
     bookings = Booking.objects.filter(status=status)
-    
+
     if not bookings.exists():
         messages.warning(request, f"No {status} bookings found.")
-        return redirect('myapp:view_all_bookings')  # Redirect to a relevant page
+        return redirect('myapp:view_all_bookings')
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = f'attachment; filename="{status}_bookings.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['User', 'Hostel', 'Full Name', 'Registration Number', 'Gender', 'Hostel Type', 'Location', 'Status'])
+    writer.writerow(['User', 'Hostel', 'Registration Number', 'Gender', 'Status', 'Date Booked'])
 
     for booking in bookings:
         writer.writerow([
             booking.user.username,
             booking.hostel.name,
-            booking.full_name,
             booking.registration_number,
             booking.gender,
-            booking.hostel_type,
-            booking.location,
             booking.status,
+            booking.date_booked.strftime("%Y-%m-%d %H:%M:%S"),
         ])
 
     return response
-
-
 
 
 
@@ -205,61 +206,125 @@ def view_declined_bookings(request):
     bookings = Booking.objects.filter(status='Declined')
     return render(request, 'declined.html', {'bookings': bookings})
 
-def download_report(request, status):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = f'attachment; filename="{status}_bookings.csv"'
 
-    writer = csv.writer(response)
-    writer.writerow(['User', 'Hostel', 'Full Name', 'Registration Number', 'Gender', 'Hostel Type', 'Location', 'Status'])
 
-    bookings = Booking.objects.filter(status=status)
-    for booking in bookings:
-        writer.writerow([
-            booking.user.username,
-            booking.hostel.name,
-            booking.full_name,
-            booking.registration_number,
-            booking.gender,
-            booking.hostel_type,
-            booking.location,
-            booking.status,
-        ])
 
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from .models import HostelApplication
+
+def download_filtered_applications_pdf(request, status):
+  
+    valid_statuses = ["Pending", "Allocated", "Declined"]
+    if status not in valid_statuses:
+        messages.warning(request, f"Invalid status: {status}")
+        return redirect('myapp:admin_dashboard')
+
+    
+    applications = HostelApplication.objects.filter(status=status)
+
+    if not applications.exists():
+        messages.warning(request, f"No {status} applications found.")
+        return redirect('myapp:admin_dashboard')
+
+
+    buffer = BytesIO()
+
+
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+
+ 
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(100, 750, "Kenyatta University Hostel Applications Report")
+    pdf.setFont("Helvetica", 12)
+    pdf.drawString(100, 730, f"Status: {status}")
+    pdf.drawString(100, 710, f"Total Applications: {applications.count()}")
+
+
+    pdf.setFont("Helvetica-Bold", 12)
+    pdf.drawString(100, 680, "Name")
+    pdf.drawString(250, 680, "Hostel Name")
+    pdf.drawString(400, 680, "Reg. No.")
+    pdf.drawString(500, 680, "Status")
+
+    pdf.setFont("Helvetica", 12)
+    y = 660
+    for application in applications:
+        pdf.drawString(100, y, application.name)
+        pdf.drawString(250, y, application.hostel_name)
+        pdf.drawString(400, y, application.reg_number)
+        pdf.drawString(500, y, application.status)
+        y -= 20  
+
+   
+    pdf.showPage()
+    pdf.save()
+
+   
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{status}_applications_report.pdf"'
     return response
-
-
-
-
-
 
 
 
 
 
 from django.http import HttpResponse
-from django.template.loader import render_to_string
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from io import BytesIO
 from .models import HostelApplication
 
 def download_application_report(request, application_id):
     application = HostelApplication.objects.get(id=application_id)
 
-    report_content = f"""
-    Dear {application.user.username},
+    
+    buffer = BytesIO()
 
-    This is to confirm that you have applied for {application.hostel_name}, 
-    which costs KES {application.cost_per_semester} per semester.
+    
+    pdf = canvas.Canvas(buffer, pagesize=letter)
 
-    Applications are processed on a first-come, first-served basis. 
-    However, priority is given to first-year students.
+    
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(100, 750, "Kenyatta University Hostel Application Report")
+    pdf.setFont("Helvetica", 12)
+    pdf.drawString(100, 730, f"Dear {application.user.username},")
+    pdf.drawString(100, 710, f"This is to confirm that you have applied for {application.hostel_name},")
+    pdf.drawString(100, 690, f"which costs KES {application.cost_per_semester} per semester.")
+    pdf.drawString(100, 670, "Applications are processed on a first-come, first-served basis.")
+    pdf.drawString(100, 650, "However, priority is given to first-year students.")
+    pdf.drawString(100, 630, f"Current Status: {application.status}")
+    pdf.drawString(100, 610, "Thank you for choosing KU Hostels.")
+    pdf.drawString(100, 590, "Best regards,")
+    pdf.drawString(100, 570, "KU Hostels Management")
 
-    Current Status: {application.status}
+    
+    pdf.showPage()
+    pdf.save()
 
-    Thank you for choosing KU Hostels.
-
-    Best regards,
-    KU Hostels Management
-    """
-
-    response = HttpResponse(report_content, content_type='text/plain')
-    response['Content-Disposition'] = f'attachment; filename="{application.hostel_name}_application_report.txt"'
+    
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{application.hostel_name}_application_report.pdf"'
     return response
+
+
+
+
+from django.shortcuts import render
+from .models import HostelApplication
+
+def view_hostel_reports(request):
+    if request.method == "POST":
+        selected_hostel = request.POST.get("hostel_name")
+        print(f"Selected Hostel: {selected_hostel}") 
+
+        applications = HostelApplication.objects.filter(hostel_name=selected_hostel)
+        print(f"Applications Found: {applications.count()}")  
+
+        return render(request, "hostel_reports.html", {"applications": applications, "selected_hostel": selected_hostel})
+    
+    return render(request, "hostel_reports.html")
